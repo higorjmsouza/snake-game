@@ -1,6 +1,7 @@
 # Snake Game - Java
 
-Este é um jogo clássico de **Snake** desenvolvido em **Java** usando **JavaFX** para a interface gráfica. O jogo permite que você controle a cobra e também inclui uma **IA treinável** para jogar automaticamente.
+Este é um jogo clássico de **Snake** desenvolvido em **Java** usando **JavaFX** para a interface gráfica. O jogo permite
+que você controle a cobra e também inclui uma **IA treinável** para jogar automaticamente.
 
 ## Funcionalidades
 
@@ -27,3 +28,18 @@ Este é um jogo clássico de **Snake** desenvolvido em **Java** usando **JavaFX*
 1. Clone o repositório:
    ```bash
    git clone git@github.com:higorjmsouza/snake-game.git
+   ```
+
+2. Navegue até o diretório do projeto:
+
+    ```bash
+    cd snake-game
+    ```
+
+3. Compile e execute o projeto com Maven:
+
+   ```bash
+   mvn clean javafx:run
+   ```
+
+O jogo será iniciado em uma janela gráfica, onde você pode controlar a cobra ou observar a IA jogando.
