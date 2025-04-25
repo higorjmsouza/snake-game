@@ -1,6 +1,7 @@
 package higor.jacinto.snake;
 
 import higor.jacinto.snake.ai.TrainingLogger;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -73,5 +74,10 @@ public class PlayerController {
         stage.setTitle("Jogador no controle");
         stage.setScene(gameScene);
         stage.show();
+
+        gamePanel.setOnGameOver(() -> {
+            final var score = gamePanel.getSnake().size() - 1;
+            Platform.runLater(() -> GameOver.show(stage, score));
+        });
     }
 }

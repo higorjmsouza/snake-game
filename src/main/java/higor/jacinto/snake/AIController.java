@@ -1,6 +1,7 @@
 package higor.jacinto.snake;
 
 import higor.jacinto.snake.ai.SimpleHeuristicAI;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
@@ -20,5 +21,10 @@ public class AIController {
         stage.setTitle("IA no controle");
         stage.setScene(gameScene);
         stage.show();
+
+        gamePanel.setOnGameOver(() -> {
+            final var score = gamePanel.getSnake().size() - 1;
+            Platform.runLater(() -> GameOver.show(stage, score));
+        });
     }
 }

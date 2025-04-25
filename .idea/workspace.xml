@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Ajustes readme">
-      <change afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GameOver.java" afterDir="false" />
+    <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Criado GameOver (ainda nao implementado) e ajustes no GamePanel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/ai/SimpleHeuristicAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/ai/SimpleHeuristicAI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/AIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/AIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/PlayerController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745502622125</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Criado GameOver (ainda nao implementado) e ajustes no GamePanel">
+      <option name="closed" value="true" />
+      <created>1745585168775</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745585168775</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,6 +147,7 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Ajustes gitignore e readme" />
     <MESSAGE value="Ajustes readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajustes readme" />
+    <MESSAGE value="Criado GameOver (ainda nao implementado) e ajustes no GamePanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Criado GameOver (ainda nao implementado) e ajustes no GamePanel" />
   </component>
 </project>
