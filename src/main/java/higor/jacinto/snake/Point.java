@@ -1,15 +1,6 @@
 package higor.jacinto.snake;
 
-import java.util.Objects;
-
-public class Point {
-
-    public final int x, y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+public record Point(int x, int y) {
 
     public Point move(final Direction d) {
         return switch (d) {
@@ -22,13 +13,14 @@ public class Point {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Point p)) return false;
-        return x == p.x && y == p.y;
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Point(int x1, int y1))) {
+            return false;
+        }
+        return x == x1 && y == y1;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
-    }
 }

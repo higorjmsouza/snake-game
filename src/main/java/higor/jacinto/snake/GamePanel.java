@@ -42,6 +42,9 @@ public class GamePanel extends Canvas {
     private long lastUpdate = 0;
     private boolean direcaoAtualizada = false;
     private final Image foodImage;
+    private final Image snakeHeadImage;
+    private final Image snakeBodyImage;
+    private final Image snakeTailImage;
 
     @Setter
     private Runnable onGameOver;
@@ -51,6 +54,9 @@ public class GamePanel extends Canvas {
         super(600, 400);
         this.logger = logger;
         this.foodImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/apple.png")));
+        this.snakeHeadImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/head.png")));
+        this.snakeBodyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/body.png")));
+        this.snakeTailImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/tail.png")));
         init();
     }
 
@@ -140,7 +146,7 @@ public class GamePanel extends Canvas {
     }
 
     private boolean colisaoComParede(final Point p) {
-        if (p.x < 0 || p.y < 0 || p.x >= width || p.y >= height) {
+        if (p.x() < 0 || p.y() < 0 || p.x() >= width || p.y() >= height) {
             encerrarJogo("Colisão com a parede!");
             return true;
         }
@@ -183,18 +189,21 @@ public class GamePanel extends Canvas {
         }
 
         // Comida com imagem
-        gc.drawImage(foodImage, food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        gc.drawImage(foodImage, food.x() * tileSize, food.y() * tileSize, tileSize, tileSize);
 
-        // Cobra: cabeça verde clara, corpo verde escuro
-        var isHead = true;
+        // Cabeça e corpo com imagem
         for (final var p : snake) {
-            if (isHead) {
-                gc.setFill(Color.rgb(0, 200, 0));
-                isHead = false;
-            } else {
-                gc.setFill(Color.rgb(0, 120, 0));
+            if (snake.getFirst().equals(p)) {
+                gc.drawImage(snakeHeadImage, p.x() * tileSize, p.y() * tileSize, tileSize, tileSize);
             }
-            gc.fillRect(p.x * tileSize, p.y * tileSize, tileSize, tileSize);
+
+            if (!snake.getFirst().equals(p) && !snake.getLast().equals(p)) {
+                gc.drawImage(snakeBodyImage, p.x() * tileSize, p.y() * tileSize, tileSize, tileSize);
+            }
+
+            if (snake.size() > 1 && snake.getLast().equals(p)) {
+                gc.drawImage(snakeTailImage, p.x() * tileSize, p.y() * tileSize, tileSize, tileSize);
+            }
         }
 
         // Pontuação
