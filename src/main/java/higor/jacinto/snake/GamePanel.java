@@ -27,19 +27,25 @@ public class GamePanel extends Canvas {
     @Getter
     @Setter
     private Direction direction = Direction.RIGHT;
+
     @Getter
     private Point food;
+
     @Getter
     private boolean running = false;
 
-    private final Random random = new Random();
     private final TrainingLogger logger;
     private SnakeAI ai;
     private boolean iaJogando = false;
     private boolean esperandoMovimentoIA = false;
+
     private long lastUpdate = 0;
     private boolean direcaoAtualizada = false;
-    private Image foodImage;
+    private final Image foodImage;
+
+    @Setter
+    private Runnable onGameOver;
+    private AnimationTimer timer;
 
     public GamePanel(final TrainingLogger logger) {
         super(600, 400);
@@ -55,7 +61,7 @@ public class GamePanel extends Canvas {
     private void init() {
         resetGame();
 
-        new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (now - lastUpdate >= 150_000_000) {
@@ -66,7 +72,16 @@ public class GamePanel extends Canvas {
                     lastUpdate = now;
                 }
             }
-        }.start();
+        };
+
+        timer.start();
+    }
+
+    public void parar() {
+        if (Objects.nonNull(timer)) {
+            timer.stop();
+        }
+        running = false;
     }
 
     private void resetGame() {
@@ -79,6 +94,7 @@ public class GamePanel extends Canvas {
 
     private void placeFood() {
         Point p;
+        final var random = new Random();
         do {
             final var x = random.nextInt(width);
             final var y = random.nextInt(height);
@@ -95,7 +111,7 @@ public class GamePanel extends Canvas {
         final var head = snake.getFirst();
         final var newHead = head.move(direction);
 
-        if (colisaoComParede(newHead)) {
+        if (colisaoComParede(newHead) || colisaoComCorpo(newHead)) {
             return;
         }
 
@@ -105,10 +121,6 @@ public class GamePanel extends Canvas {
             placeFood();
         } else {
             snake.removeLast();
-        }
-
-        if (colisaoComCorpo(newHead)) {
-            return;
         }
     }
 
@@ -145,10 +157,14 @@ public class GamePanel extends Canvas {
 
     private void encerrarJogo(final String motivo) {
         running = false;
-        if (logger != null) {
+        System.out.println(motivo);
+        if (Objects.nonNull(logger)) {
             logger.close();
         }
-        System.out.println(motivo);
+
+        if (Objects.nonNull(onGameOver)) {
+            onGameOver.run();
+        }
     }
 
     private void render() {
@@ -159,7 +175,7 @@ public class GamePanel extends Canvas {
         gc.fillRect(0, 0, getWidth(), getHeight());
 
         // Grade
-        gc.setStroke(Color.rgb(60, 60, 60));
+        gc.setStroke(Color.rgb(60, 60, 60, 0.3));
         for (var x = 0; x < getWidth(); x += tileSize) {
             for (var y = 0; y < getHeight(); y += tileSize) {
                 gc.strokeRect(x, y, tileSize, tileSize);

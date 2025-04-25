@@ -26,6 +26,6 @@ public class SimpleHeuristicAI implements SnakeAI {
 
     @Override
     public void train(final GameState state, final Direction playerMove) {
-        // Aqui futuramente podemos armazenar movimentos para aprendizado
+        //TODO
     }
 }
