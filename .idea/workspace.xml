@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Implementado GameOver ao encerrar jogo">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/body.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/head.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/tail.png" afterDir="false" />
+    <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Adicionado imagem da cobra no game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/ai/SimpleHeuristicAI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/ai/SimpleHeuristicAI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745585476329</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Adicionado imagem da cobra no game">
+      <option name="closed" value="true" />
+      <created>1745603112257</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745603112257</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +164,7 @@
     <MESSAGE value="Ajustes readme" />
     <MESSAGE value="Criado GameOver (ainda nao implementado) e ajustes no GamePanel" />
     <MESSAGE value="Implementado GameOver ao encerrar jogo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementado GameOver ao encerrar jogo" />
+    <MESSAGE value="Adicionado imagem da cobra no game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado imagem da cobra no game" />
   </component>
 </project>

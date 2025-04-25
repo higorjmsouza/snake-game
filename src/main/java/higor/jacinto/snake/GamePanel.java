@@ -5,6 +5,7 @@ import higor.jacinto.snake.ai.TrainingLogger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -193,23 +194,45 @@ public class GamePanel extends Canvas {
 
         // Cabeça e corpo com imagem
         for (final var p : snake) {
+            gc.save();
             if (snake.getFirst().equals(p)) {
-                gc.drawImage(snakeHeadImage, p.x() * tileSize, p.y() * tileSize, tileSize, tileSize);
+                renderizaImagem(p, gc, snakeHeadImage);
             }
 
             if (!snake.getFirst().equals(p) && !snake.getLast().equals(p)) {
-                gc.drawImage(snakeBodyImage, p.x() * tileSize, p.y() * tileSize, tileSize, tileSize);
+                renderizaImagem(p, gc, snakeBodyImage);
             }
 
             if (snake.size() > 1 && snake.getLast().equals(p)) {
-                gc.drawImage(snakeTailImage, p.x() * tileSize, p.y() * tileSize, tileSize, tileSize);
+                renderizaImagem(p, gc, snakeTailImage);
             }
+            gc.restore();
         }
 
         // Pontuação
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("Verdana", 18));
         gc.fillText("Pontuação: " + (snake.size() - 1), 10, 20);
+    }
+
+    private void renderizaImagem(final Point p, final GraphicsContext gc, final Image image) {
+        final var px = p.x() * tileSize;
+        final var py = p.y() * tileSize;
+
+        gc.save();
+        gc.translate(px + tileSize / 2.0, py + tileSize / 2.0);
+        gc.rotate(getAngle());
+        gc.drawImage(image, -tileSize / 2.0, -tileSize / 2.0, tileSize, tileSize);
+        gc.restore();
+    }
+
+    private double getAngle() {
+        return switch (direction) {
+            case UP -> 180;
+            case DOWN -> 0;
+            case LEFT -> 90;
+            case RIGHT -> 270;
+        };
     }
 
     public void setIAJogando(final SnakeAI ai) {
