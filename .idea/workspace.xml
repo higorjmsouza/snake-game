@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Adicionado imagem da cobra no game">
+    <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Adicionado ico do game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" afterDir="false" />
     </list>
@@ -139,7 +139,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745603112257</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Ajustes no angulo da cobra">
+      <option name="closed" value="true" />
+      <created>1745604392048</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745604392048</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Adicionado ico do game">
+      <option name="closed" value="true" />
+      <created>1745604443321</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745604443321</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,6 +181,8 @@
     <MESSAGE value="Criado GameOver (ainda nao implementado) e ajustes no GamePanel" />
     <MESSAGE value="Implementado GameOver ao encerrar jogo" />
     <MESSAGE value="Adicionado imagem da cobra no game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionado imagem da cobra no game" />
+    <MESSAGE value="Ajustes no angulo da cobra" />
+    <MESSAGE value="Adicionado ico do game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionado ico do game" />
   </component>
 </project>

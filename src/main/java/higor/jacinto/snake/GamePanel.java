@@ -45,6 +45,7 @@ public class GamePanel extends Canvas {
     private final Image foodImage;
     private final Image snakeHeadImage;
     private final Image snakeBodyImage;
+    private final Image snakeCurveBodyImage;
     private final Image snakeTailImage;
 
     @Setter
@@ -57,6 +58,7 @@ public class GamePanel extends Canvas {
         this.foodImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/apple.png")));
         this.snakeHeadImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/head.png")));
         this.snakeBodyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/body.png")));
+        this.snakeCurveBodyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/body.png")));
         this.snakeTailImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/tail.png")));
         init();
     }
@@ -192,22 +194,8 @@ public class GamePanel extends Canvas {
         // Comida com imagem
         gc.drawImage(foodImage, food.x() * tileSize, food.y() * tileSize, tileSize, tileSize);
 
-        // Cabeça e corpo com imagem
-        for (final var p : snake) {
-            gc.save();
-            if (snake.getFirst().equals(p)) {
-                renderizaImagem(p, gc, snakeHeadImage);
-            }
-
-            if (!snake.getFirst().equals(p) && !snake.getLast().equals(p)) {
-                renderizaImagem(p, gc, snakeBodyImage);
-            }
-
-            if (snake.size() > 1 && snake.getLast().equals(p)) {
-                renderizaImagem(p, gc, snakeTailImage);
-            }
-            gc.restore();
-        }
+        // Cobra com imagem
+        renderizaCobra(gc);
 
         // Pontuação
         gc.setFill(Color.WHITE);
@@ -215,24 +203,107 @@ public class GamePanel extends Canvas {
         gc.fillText("Pontuação: " + (snake.size() - 1), 10, 20);
     }
 
-    private void renderizaImagem(final Point p, final GraphicsContext gc, final Image image) {
+    private void renderizaCobra(final GraphicsContext gc) {
+        for (var i = 0; i < snake.size(); i++) {
+            final var current = snake.get(i);
+
+            // Cabeça
+            if (snake.getFirst().equals(current)) {
+                double angle;
+                if (snake.size() > 1) {
+                    final var next = snake.get(1);
+                    angle = calcularAngulo(current, next);
+                } else {
+                    angle = switch (direction) {
+                        case UP -> 180;
+                        case DOWN -> 0;
+                        case LEFT -> 90;
+                        case RIGHT -> 270;
+                    };
+                }
+                renderizaImagem(current, gc, angle, snakeHeadImage);
+            }
+
+            // Corpo
+            if (!snake.getFirst().equals(current) && !snake.getLast().equals(current)) {
+                final var prev = snake.get(i - 1);
+                final var next = snake.get(i + 1);
+
+                if (prev.x() == next.x()) {
+                    // Corpo vertical
+                    renderizaImagem(current, gc, 0, snakeBodyImage);
+                } else if (prev.y() == next.y()) {
+                    // Corpo horizontal
+                    renderizaImagem(current, gc, 90, snakeBodyImage);
+                } else {
+                    // Corpo curvado (você pode trocar para imagem de curva se tiver uma)
+                    final var angle = calcularAnguloCurva(prev, current, next);
+                    renderizaImagem(current, gc, angle, snakeCurveBodyImage);
+                }
+            }
+
+            // Cauda
+            if (snake.getLast().equals(current) && snake.size() > 1) {
+                final var prev = snake.get(i - 1);
+                final var angle = calcularAngulo(prev, current);
+                renderizaImagem(current, gc, angle, snakeTailImage);
+            }
+        }
+    }
+
+    private void renderizaImagem(final Point p, final GraphicsContext gc, final double angle, final Image image) {
         final var px = p.x() * tileSize;
         final var py = p.y() * tileSize;
 
         gc.save();
         gc.translate(px + tileSize / 2.0, py + tileSize / 2.0);
-        gc.rotate(getAngle());
+        gc.rotate(angle);
         gc.drawImage(image, -tileSize / 2.0, -tileSize / 2.0, tileSize, tileSize);
         gc.restore();
     }
 
-    private double getAngle() {
-        return switch (direction) {
-            case UP -> 180;
-            case DOWN -> 0;
-            case LEFT -> 90;
-            case RIGHT -> 270;
-        };
+    private double calcularAngulo(final Point de, final Point para) {
+        final var dx = para.x() - de.x();
+        final var dy = para.y() - de.y();
+
+        if (dx == 1) {
+            return 90;
+        }
+
+        if (dx == -1) {
+            return 270;
+        }
+
+        if (dy == 1) {
+            return 180;
+        }
+
+        return 0;
+    }
+
+    private double calcularAnguloCurva(final Point prev, final Point current, final Point next) {
+        final var dx1 = current.x() - prev.x();
+        final var dy1 = current.y() - prev.y();
+        final var dx2 = next.x() - current.x();
+        final var dy2 = next.y() - current.y();
+
+        if ((dx1 == 1 && dy2 == -1) || (dy1 == -1 && dx2 == 1)) {
+            return 0;
+        }
+
+        if ((dx1 == -1 && dy2 == -1) || (dy1 == -1 && dx2 == -1)) {
+            return 90;
+        }
+
+        if ((dx1 == -1 && dy2 == 1) || (dy1 == 1 && dx2 == -1)) {
+            return 180;
+        }
+
+        if ((dx1 == 1 && dy2 == 1) || (dy1 == 1 && dx2 == 1)) {
+            return 270;
+        }
+
+        return 0;
     }
 
     public void setIAJogando(final SnakeAI ai) {
