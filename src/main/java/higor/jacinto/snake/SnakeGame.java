@@ -21,19 +21,16 @@ import java.util.Objects;
 
 public class SnakeGame extends Application {
 
-    private AudioClip clickSound;
+    private static final AudioClip bgSound = new AudioClip(Objects.requireNonNull(SnakeGame.class.getResource("/sounds/background.wav")).toExternalForm());
 
     @Override
-    public void start(Stage stage) {
+    public void start(final Stage stage) {
         stage.setTitle("Snake Game com IA");
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/snake-game.png"))));
-
-        clickSound = new AudioClip(Objects.requireNonNull(getClass().getResource("/sounds/click.mp3")).toExternalForm());
-
         final var root = new StackPane();
 
-        final var jogarLabel = getAnimatedLabel("▶ Jogar", PlayerController::run);
-        final var iaLabel = getAnimatedLabel("🤖 IA Jogar", AIController::run);
+        final var jogarLabel = getAnimatedLabel("▶ Jogar", () -> PlayerController.run(stage));
+        final var iaLabel = getAnimatedLabel("🤖 IA Jogar", () -> AIController.run(stage));
         final var title = getTitle();
 
         final var vbox = new VBox(20, title, jogarLabel, iaLabel);
@@ -42,8 +39,9 @@ public class SnakeGame extends Application {
 
         final var minLabelWidth = 200D;
         jogarLabel.setMinWidth(minLabelWidth);
-        iaLabel.setMinWidth(minLabelWidth);
         jogarLabel.setAlignment(Pos.CENTER);
+
+        iaLabel.setMinWidth(minLabelWidth);
         iaLabel.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(getBackground(), vbox);
@@ -51,6 +49,14 @@ public class SnakeGame extends Application {
         final var scene = new Scene(root, 600, 400);
         stage.setScene(scene);
         stage.show();
+
+        if (bgSound.isPlaying()) {
+            bgSound.stop();
+        }
+
+        bgSound.setCycleCount(AudioClip.INDEFINITE);
+        bgSound.setVolume(0.1D);
+        bgSound.play();
     }
 
     private ImageView getBackground() {
@@ -85,6 +91,8 @@ public class SnakeGame extends Application {
         });
 
         label.setOnMouseClicked(e -> {
+            final var clickSound = new AudioClip(Objects.requireNonNull(SnakeGame.class.getResource("/sounds/click.wav")).toExternalForm());
+            clickSound.setVolume(0.1D);
             clickSound.play();
             onClick.run();
         });

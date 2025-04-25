@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import lombok.Getter;
@@ -127,6 +128,9 @@ public class GamePanel extends Canvas {
         snake.addFirst(newHead);
 
         if (newHead.equals(food)) {
+            final var bite = new AudioClip(Objects.requireNonNull(getClass().getResource("/sounds/bite.wav")).toExternalForm());
+            bite.setVolume(0.1D);
+            bite.play();
             placeFood();
         } else {
             snake.removeLast();
@@ -174,6 +178,10 @@ public class GamePanel extends Canvas {
         if (Objects.nonNull(onGameOver)) {
             onGameOver.run();
         }
+        
+        final var deadSound = new AudioClip(Objects.requireNonNull(getClass().getResource("/sounds/dead.wav")).toExternalForm());
+        deadSound.setVolume(0.1D);
+        deadSound.play();
     }
 
     private void render() {

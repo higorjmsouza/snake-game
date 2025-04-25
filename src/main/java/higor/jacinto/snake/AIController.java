@@ -11,12 +11,11 @@ import java.util.Objects;
 
 public class AIController {
 
-    public static void run() {
+    public static void run(final Stage stage) {
         final var gamePanel = new GamePanel();
         gamePanel.setIAJogando(new SimpleHeuristicAI());
 
         final var gameScene = new Scene(new StackPane(gamePanel), 600, 400);
-        final var stage = new Stage();
         stage.getIcons().add(new Image(Objects.requireNonNull(AIController.class.getResourceAsStream("/images/snake-game.png"))));
         stage.setTitle("IA no controle");
         stage.setScene(gameScene);
@@ -24,7 +23,7 @@ public class AIController {
 
         gamePanel.setOnGameOver(() -> {
             final var score = gamePanel.getSnake().size() - 1;
-            Platform.runLater(() -> GameOver.show(stage, score));
+            Platform.runLater(() -> GameOver.show(stage, score, true));
         });
     }
 }

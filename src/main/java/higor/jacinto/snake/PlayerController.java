@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PlayerController {
 
-    public static void run() {
+    public static void run(final Stage stage) {
         final var logger = new TrainingLogger();
         final var gamePanel = new GamePanel(logger);
         final var gameScene = new Scene(new javafx.scene.layout.StackPane(gamePanel), 600, 400);
@@ -69,7 +69,6 @@ public class PlayerController {
             }
         });
 
-        final var stage = new Stage();
         stage.getIcons().add(new Image(Objects.requireNonNull(PlayerController.class.getResourceAsStream("/images/snake-game.png"))));
         stage.setTitle("Jogador no controle");
         stage.setScene(gameScene);
@@ -77,7 +76,7 @@ public class PlayerController {
 
         gamePanel.setOnGameOver(() -> {
             final var score = gamePanel.getSnake().size() - 1;
-            Platform.runLater(() -> GameOver.show(stage, score));
+            Platform.runLater(() -> GameOver.show(stage, score, false));
         });
     }
 }
