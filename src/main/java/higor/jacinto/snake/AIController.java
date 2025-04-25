@@ -2,8 +2,11 @@ package higor.jacinto.snake;
 
 import higor.jacinto.snake.ai.SimpleHeuristicAI;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class AIController {
 
@@ -13,6 +16,7 @@ public class AIController {
 
         final var gameScene = new Scene(new StackPane(gamePanel), 600, 400);
         final var stage = new Stage();
+        stage.getIcons().add(new Image(Objects.requireNonNull(AIController.class.getResourceAsStream("/images/snake-game.png"))));
         stage.setTitle("IA no controle");
         stage.setScene(gameScene);
         stage.show();

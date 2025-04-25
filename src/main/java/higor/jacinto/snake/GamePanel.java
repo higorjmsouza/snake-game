@@ -5,7 +5,9 @@ import higor.jacinto.snake.ai.TrainingLogger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +19,7 @@ public class GamePanel extends Canvas {
 
     private final int width = 30;  // colunas
     private final int height = 20; // linhas
-    private final int tileSize = 20;
+    private final int tileSize = 20; // tamanho do quadrado
 
     @Getter
     private LinkedList<Point> snake;
@@ -36,10 +38,13 @@ public class GamePanel extends Canvas {
     private boolean iaJogando = false;
     private boolean esperandoMovimentoIA = false;
     private long lastUpdate = 0;
+    private boolean direcaoAtualizada = false;
+    private Image foodImage;
 
-    public GamePanel(TrainingLogger logger) {
+    public GamePanel(final TrainingLogger logger) {
         super(600, 400);
         this.logger = logger;
+        this.foodImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/apple.png")));
         init();
     }
 
@@ -85,9 +90,10 @@ public class GamePanel extends Canvas {
 
     private void update() {
         solicitarMovimentoIA();
+        permitirNovaDirecao();
 
-        final Point head = snake.getFirst();
-        final Point newHead = head.move(direction);
+        final var head = snake.getFirst();
+        final var newHead = head.move(direction);
 
         if (colisaoComParede(newHead)) {
             return;
@@ -121,7 +127,7 @@ public class GamePanel extends Canvas {
         }
     }
 
-    private boolean colisaoComParede(Point p) {
+    private boolean colisaoComParede(final Point p) {
         if (p.x < 0 || p.y < 0 || p.x >= width || p.y >= height) {
             encerrarJogo("Colisão com a parede!");
             return true;
@@ -129,7 +135,7 @@ public class GamePanel extends Canvas {
         return false;
     }
 
-    private boolean colisaoComCorpo(Point head) {
+    private boolean colisaoComCorpo(final Point head) {
         if (snake.subList(1, snake.size()).contains(head)) {
             encerrarJogo("Colidiu com o corpo!");
             return true;
@@ -137,7 +143,7 @@ public class GamePanel extends Canvas {
         return false;
     }
 
-    private void encerrarJogo(String motivo) {
+    private void encerrarJogo(final String motivo) {
         running = false;
         if (logger != null) {
             logger.close();
@@ -146,29 +152,55 @@ public class GamePanel extends Canvas {
     }
 
     private void render() {
-        var gc = getGraphicsContext2D();
+        final var gc = getGraphicsContext2D();
 
-        gc.setFill(Color.BLACK);
+        // Fundo escuro
+        gc.setFill(Color.rgb(40, 40, 40));
         gc.fillRect(0, 0, getWidth(), getHeight());
 
-        // Comida
-        gc.setFill(Color.RED);
-        gc.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+        // Grade
+        gc.setStroke(Color.rgb(60, 60, 60));
+        for (var x = 0; x < getWidth(); x += tileSize) {
+            for (var y = 0; y < getHeight(); y += tileSize) {
+                gc.strokeRect(x, y, tileSize, tileSize);
+            }
+        }
 
-        // Cobra
-        gc.setFill(Color.LIME);
+        // Comida com imagem
+        gc.drawImage(foodImage, food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+
+        // Cobra: cabeça verde clara, corpo verde escuro
+        var isHead = true;
         for (final var p : snake) {
+            if (isHead) {
+                gc.setFill(Color.rgb(0, 200, 0));
+                isHead = false;
+            } else {
+                gc.setFill(Color.rgb(0, 120, 0));
+            }
             gc.fillRect(p.x * tileSize, p.y * tileSize, tileSize, tileSize);
         }
 
-        // Debug
-        // System.out.println("Snake: " + snake);
-        // System.out.println("Food: " + food);
-        // System.out.println("Direção: " + direction);
+        // Pontuação
+        gc.setFill(Color.WHITE);
+        gc.setFont(new Font("Verdana", 18));
+        gc.fillText("Pontuação: " + (snake.size() - 1), 10, 20);
     }
 
-    public void setIAJogando(SnakeAI ai) {
+    public void setIAJogando(final SnakeAI ai) {
         this.ai = ai;
         this.iaJogando = true;
+    }
+
+    public void permitirNovaDirecao() {
+        direcaoAtualizada = false;
+    }
+
+    public boolean podeAtualizarDirecao() {
+        return !direcaoAtualizada;
+    }
+
+    public void marcarDirecaoAtualizada() {
+        direcaoAtualizada = true;
     }
 }

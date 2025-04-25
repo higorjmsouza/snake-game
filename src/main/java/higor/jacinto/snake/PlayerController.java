@@ -2,6 +2,7 @@ package higor.jacinto.snake;
 
 import higor.jacinto.snake.ai.TrainingLogger;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -18,8 +19,9 @@ public class PlayerController {
         gameScene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP -> {
-                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.UP)) {
+                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.UP) && gamePanel.podeAtualizarDirecao()) {
                         gamePanel.setDirection(Direction.UP);
+                        gamePanel.marcarDirecaoAtualizada();
 
                         if (!Objects.equals(ultimaDirecao.get(), Direction.UP)) {
                             logger.log(new GameState(gamePanel.getSnake(), gamePanel.getFood(), gamePanel.getDirection()), Direction.UP);
@@ -29,8 +31,9 @@ public class PlayerController {
                 }
 
                 case DOWN -> {
-                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.DOWN)) {
+                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.DOWN) && gamePanel.podeAtualizarDirecao()) {
                         gamePanel.setDirection(Direction.DOWN);
+                        gamePanel.marcarDirecaoAtualizada();
 
                         if (!Objects.equals(ultimaDirecao.get(), Direction.DOWN)) {
                             logger.log(new GameState(gamePanel.getSnake(), gamePanel.getFood(), gamePanel.getDirection()), Direction.DOWN);
@@ -40,8 +43,9 @@ public class PlayerController {
                 }
 
                 case LEFT -> {
-                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.LEFT)) {
+                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.LEFT) && gamePanel.podeAtualizarDirecao()) {
                         gamePanel.setDirection(Direction.LEFT);
+                        gamePanel.marcarDirecaoAtualizada();
 
                         if (!Objects.equals(ultimaDirecao.get(), Direction.LEFT)) {
                             logger.log(new GameState(gamePanel.getSnake(), gamePanel.getFood(), gamePanel.getDirection()), Direction.LEFT);
@@ -51,8 +55,9 @@ public class PlayerController {
                 }
 
                 case RIGHT -> {
-                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.RIGHT)) {
+                    if (Direction.direcaoValida(gamePanel.getDirection(), Direction.RIGHT) && gamePanel.podeAtualizarDirecao()) {
                         gamePanel.setDirection(Direction.RIGHT);
+                        gamePanel.marcarDirecaoAtualizada();
 
                         if (!Objects.equals(ultimaDirecao.get(), Direction.RIGHT)) {
                             logger.log(new GameState(gamePanel.getSnake(), gamePanel.getFood(), gamePanel.getDirection()), Direction.RIGHT);
@@ -63,9 +68,10 @@ public class PlayerController {
             }
         });
 
-        final var gameStage = new Stage();
-        gameStage.setTitle("Jogador no controle");
-        gameStage.setScene(gameScene);
-        gameStage.show();
+        final var stage = new Stage();
+        stage.getIcons().add(new Image(Objects.requireNonNull(PlayerController.class.getResourceAsStream("/images/snake-game.png"))));
+        stage.setTitle("Jogador no controle");
+        stage.setScene(gameScene);
+        stage.show();
     }
 }
