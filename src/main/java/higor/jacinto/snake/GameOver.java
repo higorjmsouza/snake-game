@@ -24,6 +24,16 @@ public class GameOver {
         scoreText.setFont(Font.font("Verdana", 28));
         scoreText.setFill(Color.WHITE);
 
+        final var restart = getRestart(stage, iaJogando);
+        final var backToMenu = getBackToMenu(stage);
+
+        root.getChildren().addAll(title, scoreText, restart, backToMenu);
+
+        final var scene = new Scene(root, 600, 400);
+        stage.setScene(scene);
+    }
+
+    private static Button getRestart(Stage stage, boolean iaJogando) {
         final var restart = new Button("Reiniciar");
         restart.setStyle("""
                 -fx-font-size: 18px;
@@ -40,7 +50,10 @@ public class GameOver {
                 PlayerController.run(stage);
             }
         });
+        return restart;
+    }
 
+    private static Button getBackToMenu(Stage stage) {
         final var backToMenu = new Button("Voltar ao Menu");
         backToMenu.setStyle("""
                 -fx-font-size: 18px;
@@ -50,10 +63,6 @@ public class GameOver {
                 -fx-background-radius: 10;
                 """);
         backToMenu.setOnAction(e -> new SnakeGame().start(stage));
-
-        root.getChildren().addAll(title, scoreText, restart, backToMenu);
-
-        final var scene = new Scene(root, 600, 400);
-        stage.setScene(scene);
+        return backToMenu;
     }
 }

@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="705b45c0-fbbd-42c6-ae58-15344ef46285" name="Changes" comment="Adicionado ico do game">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sounds/background.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sounds/bite.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sounds/click.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sounds/dead.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/AIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/AIController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GameOver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/PlayerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/SnakeGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/higor/jacinto/snake/SnakeGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/click.mp3" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
